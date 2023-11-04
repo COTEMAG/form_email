@@ -1,55 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<?php
 
-    <style>
+// if "email" variable is filled out, send email
 
-        body{
-            text-align. center;
-        }
+if (isset($_REQUEST['email'])) {
 
-    </style>
-</head>
-<body>
+    //Email information
 
-   <form action="index.php" method="POST">
+    $destino = "directcafe123@gmail.com";
 
-   <input type="text" id="nombre" name="nombre"> <br>
-   <input type="email" name="email" id="email"> <br>
-   <textarea name="mensaje" id="mensaje" cols="30" rows="10"></textarea> <br>
-   <input type="submit" value="enviar">
+    $email = $_REQUEST['email'];
 
-   </form>
+    $asunto = $_REQUEST['subject'];
 
-   <?php
+    $mensaje = $_REQUEST['message'];
 
-   if(isset($_POST["enviar"])){
-     $nombre=$_POST["nombre"];
-     $email=$_POST["email"];
-     $mensaje=$_POST["mensaje"];
+    //Send email
 
-     $destino="jbdaconte@gmail.com";
-     $asunto="Mensaje de $email";
-     $contenido="Nombre: $nombre \n" . "Email: $email \n" . "Mensaje: $mensaje";
+    mail($destino, $asunto, $mensaje, "From:" . $email);
 
-     $header="From: micorreo@correo.com";
+    //Email response
 
-     $mail=mail($destino,$asunto,$contenido,$header);
+    echo "Gracias por nada!";
+}
 
-     if($mail){
-        echo "Se mandó";
-     }
+//if "email" variable is not filled out, display the form
 
-     else{
-        echo "No se mandó";
-     }
-    
-   }
+else { ?>
 
-   ?>
-    
-</body>
-</html>
+    <form method="post">
+        Email: <input name="email" type="text" />
+
+        Asunto: <input name="subject" type="text" />
+
+        Mensaje: <textarea name="message" rows="15" cols="40"></textarea>
+
+        <input type="submit" value="Submit" />
+    </form>
+
+<?php } ?>
